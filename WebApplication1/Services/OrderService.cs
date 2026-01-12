@@ -6,11 +6,7 @@ namespace WebApplication1.Services
     public class OrderService
     {
         private readonly AppDbContext _context;
-
-        public OrderService(AppDbContext context)
-        {
-            _context = context;
-        }
+        public OrderService(AppDbContext context) => _context = context;
 
         public async Task<List<Order>> GetAllAsync(OrderStatus? status)
         {
