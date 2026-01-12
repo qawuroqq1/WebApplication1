@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApplication1.Models;
+using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
 {
@@ -8,45 +8,33 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly OrderService _service;
 
-        public OrdersController(AppDbContext context)
-        {
-            _context = context;
-        }
+        public OrdersController(OrderService service) => _service = service;
 
-        // ПОЛУЧЕНИЕ с фильтрами
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders([FromQuery] string? status = null)
+        public async Task<IActionResult> Get([FromQuery] string? status)
+            => Ok(await _service.GetAllAsync(status));
+
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var query = _context.Orders.AsQueryable();
-            if (!string.IsNullOrEmpty(status))
-            {
-                query = query.Where(o => o.Status == status);
-            }
-            return await query.ToListAsync();
+            var order = await _service.GetByIdAsync(id);
+            return order == null ? NotFound() : Ok(order);
         }
 
-        // СОЗДАНИЕ
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<IActionResult> Create(Order order)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync(); // Сохраняем в базу
-            return Ok(order);
+            var id = await _service.CreateAsync(order);
+            return CreatedAtAction(nameof(GetById), new { id = id }, new { Id = id });
         }
-
-        // СУММА
         [HttpGet("total-price")]
-        public async Task<ActionResult<object>> GetTotalPrice([FromQuery] string? status = null)
+        public async Task<ActionResult<decimal>> GetTotal([FromQuery] string? status)
         {
-            var query = _context.Orders.AsQueryable();
-            if (!string.IsNullOrEmpty(status))
-            {
-                query = query.Where(o => o.Status == status);
-            }
-            var total = await query.SumAsync(o => o.Price);
-            return Ok(new { TotalPrice = total });
+            var total = await _service.GetTotalSumAsync(status);
+            return Ok(total);
         }
     }
 }
