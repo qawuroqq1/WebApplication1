@@ -8,12 +8,15 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService _service; 
+        private readonly OrderService _service;
 
         public OrdersController(OrderService service)
         {
             _service = service;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] OrderStatus? status) => Ok(await _service.GetAllAsync(status));
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
@@ -22,17 +25,17 @@ namespace WebApplication1.Controllers
             return order == null ? NotFound() : Ok(order);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, Order order)
+        [HttpPost]
+        public async Task<IActionResult> Create(Order order)
         {
-            if (id != order.Id) return BadRequest();
-            return await _service.UpdateAsync(order) ? NoContent() : NotFound();
+            var id = await _service.CreateAsync(order);
+            return CreatedAtAction(nameof(GetById), new { id = id }, new { Id = id });
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            return await _service.DeleteAsync(id) ? NoContent() : NotFound();
-        }
+        public async Task<IActionResult> Delete(Guid id) => await _service.DeleteAsync(id) ? NoContent() : NotFound();
+
+        [HttpGet("total-price")]
+        public async Task<ActionResult<decimal>> GetTotalPrice([FromQuery] OrderStatus? status) => Ok(await _service.GetTotalSumAsync(status));
     }
 }
