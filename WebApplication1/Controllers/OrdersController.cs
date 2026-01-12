@@ -8,33 +8,31 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService _service;
+        private readonly OrderService _service; 
 
-        public OrdersController(OrderService service) => _service = service;
+        public OrdersController(OrderService service)
+        {
+            _service = service;
+        }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] string? status)
-            => Ok(await _service.GetAllAsync(status));
-
-        
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var order = await _service.GetByIdAsync(id);
             return order == null ? NotFound() : Ok(order);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(Order order)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, Order order)
         {
-            var id = await _service.CreateAsync(order);
-            return CreatedAtAction(nameof(GetById), new { id = id }, new { Id = id });
+            if (id != order.Id) return BadRequest();
+            return await _service.UpdateAsync(order) ? NoContent() : NotFound();
         }
-        [HttpGet("total-price")]
-        public async Task<ActionResult<decimal>> GetTotal([FromQuery] string? status)
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var total = await _service.GetTotalSumAsync(status);
-            return Ok(total);
+            return await _service.DeleteAsync(id) ? NoContent() : NotFound();
         }
     }
 }

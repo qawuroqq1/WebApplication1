@@ -2,12 +2,14 @@
 
 namespace WebApplication1.Models
 {
+    public enum OrderStatus { New, Processing, Completed, Cancelled }
+
     public class Order
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-        public string Status { get; set; } = "Новый"; 
-        public decimal Price { get; set; }           
+        public Guid Id { get; init; }
+        public required string Name { get; init; } 
+        public DateTime OrderDate { get; init; }
+        public OrderStatus Status { get; init; }
+        public decimal Price { get; init; }
     }
 }
