@@ -1,15 +1,22 @@
-﻿using System;
-
-namespace WebApplication1.Models
+﻿namespace WebApplication1.Models
 {
-    public enum OrderStatus { New, Processing, Completed, Cancelled }
+    using System;
+
+    public enum OrderStatus
+    {
+        New,
+        InProgress,
+        Completed,
+    }
 
     public class Order
     {
-        public Guid Id { get; init; }
-        public required string Name { get; init; } 
-        public DateTime OrderDate { get; init; }
-        public OrderStatus Status { get; init; }
-        public decimal Price { get; init; }
+        public Guid Id { get; set; }
+
+        public required string Name { get; set; }
+
+        public decimal Price { get; set; }
+
+        public OrderStatus Status { get; set; }
     }
 }
