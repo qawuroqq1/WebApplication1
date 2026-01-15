@@ -1,40 +1,69 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
-using WebApplication1.Services;
-
-namespace WebApplication1.Controllers
+﻿namespace WebApplication1.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using WebApplication1.Models;
+    using WebApplication1.Services;
+
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService _service;
+        private readonly OrderService service;
 
-        public OrdersController(OrderService service) => _service = service;
+        public OrdersController(OrderService service)
+        {
+            this.service = service;
+        }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] string? status)
-            => Ok(await _service.GetAllAsync(status));
-
-        
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetAll([FromQuery] OrderStatus? status)
         {
-            var order = await _service.GetByIdAsync(id);
-            return order == null ? NotFound() : Ok(order);
+            return this.Ok(await this.service.GetAllAsync(status));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var order = await this.service.GetByIdAsync(id);
+            if (order == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.Ok(order);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(Order order)
         {
-            var id = await _service.CreateAsync(order);
-            return CreatedAtAction(nameof(GetById), new { id = id }, new { Id = id });
+            var id = await this.service.CreateAsync(order);
+            return this.CreatedAtAction(nameof(this.GetById), new { id = id }, new { Id = id });
         }
-        [HttpGet("total-price")]
-        public async Task<ActionResult<decimal>> GetTotal([FromQuery] string? status)
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Order order)
         {
-            var total = await _service.GetTotalSumAsync(status);
-            return Ok(total);
+            if (id != order.Id)
+            {
+                return this.BadRequest();
+            }
+
+            var result = await this.service.UpdateAsync(order);
+            return result ? this.NoContent() : this.NotFound();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            return await this.service.DeleteAsync(id) ? this.NoContent() : this.NotFound();
+        }
+
+        [HttpGet("total-price")]
+        public async Task<IActionResult> GetTotalPrice([FromQuery] OrderStatus? status)
+        {
+            return this.Ok(await this.service.GetTotalSumAsync(status));
         }
     }
 }
