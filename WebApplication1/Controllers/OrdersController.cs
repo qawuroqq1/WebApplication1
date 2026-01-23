@@ -1,69 +1,81 @@
-﻿namespace WebApplication1.Controllers
-{
-    using System;
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using WebApplication1.Models;
-    using WebApplication1.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
+using MassTransit;
 
-    [Route("api/[controller]")]
+namespace WebApplication1.Controllers
+{
+    [Route("api/orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService service;
+        private static readonly List<Order> _orders = new List<Order>();
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public OrdersController(OrderService service)
+        public OrdersController(IPublishEndpoint publishEndpoint)
         {
-            this.service = service;
+            _publishEndpoint = publishEndpoint;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] OrderStatus? status)
+        public async Task<IActionResult> GetAll()
         {
-            return this.Ok(await this.service.GetAllAsync(status));
+            return Ok(_orders);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var order = await this.service.GetByIdAsync(id);
-            if (order == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.Ok(order);
+            var order = _orders.FirstOrDefault(o => o.Id == id);
+            if (order == null) return NotFound();
+            return Ok(order);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Order order)
+        public async Task<IActionResult> Create([FromBody] Order order)
         {
-            var id = await this.service.CreateAsync(order);
-            return this.CreatedAtAction(nameof(this.GetById), new { id = id }, new { Id = id });
+            order.Id = Guid.NewGuid();
+            _orders.Add(order);
+
+            await _publishEndpoint.Publish<IOrderCreated>(new
+            {
+                OrderId = order.Id,
+                Address = "Some Address"
+            });
+
+            return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Order order)
         {
-            if (id != order.Id)
-            {
-                return this.BadRequest();
-            }
+            var existingOrder = _orders.FirstOrDefault(o => o.Id == id);
+            if (existingOrder == null) return NotFound();
 
-            var result = await this.service.UpdateAsync(order);
-            return result ? this.NoContent() : this.NotFound();
+            existingOrder.Name = order.Name;
+            existingOrder.Price = order.Price;
+            existingOrder.Status = order.Status;
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return await this.service.DeleteAsync(id) ? this.NoContent() : this.NotFound();
-        }
+            var order = _orders.FirstOrDefault(o => o.Id == id);
+            if (order == null) return NotFound();
 
-        [HttpGet("total-price")]
-        public async Task<IActionResult> GetTotalPrice([FromQuery] OrderStatus? status)
-        {
-            return this.Ok(await this.service.GetTotalSumAsync(status));
+            _orders.Remove(order);
+            return NoContent();
         }
+    }
+
+    public interface IOrderCreated
+    {
+        Guid OrderId { get; }
+        string Address { get; }
     }
 }
