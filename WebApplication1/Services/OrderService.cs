@@ -76,4 +76,4 @@
             return await query.SumAsync(o => o.Price);
         }
     }
-}
+}       
