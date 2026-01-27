@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 using MassTransit;
+using Contracts;
 
 namespace WebApplication1.Controllers
 {
@@ -72,7 +73,10 @@ namespace WebApplication1.Controllers
             return NoContent();
         }
     }
+}
 
+namespace Contracts
+{
     public interface IOrderCreated
     {
         Guid OrderId { get; }
