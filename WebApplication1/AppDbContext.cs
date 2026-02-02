@@ -17,6 +17,8 @@
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new OrderConfiguration());
-        }
+            modelBuilder.Entity<Order>().Property(o => o.Status).HasConversion<int>();
+        
+     }
     }
 }
