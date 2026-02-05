@@ -12,7 +12,6 @@ namespace project_3.Consumers
     public class OrderCreatedConsumer : IConsumer<IOrderCreated>
     {
         private readonly DeliveryDbContext _context;
-
         public OrderCreatedConsumer(DeliveryDbContext context)
         {
             _context = context;

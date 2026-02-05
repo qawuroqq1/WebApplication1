@@ -3,11 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{4C1DCF40-C78F-4835-8DFD-8F335D056EEA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "..\..\ApiGateway\ApiGateway\ApiGateway.csproj", "{7904D456-1703-4C4B-733E-A6903F06FCAF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85D16CCA-6183-4B24-B025-4205BEFC0129} = {85D16CCA-6183-4B24-B025-4205BEFC0129}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "project 3", "..\project-4-reworked-5-week\project 3\project 3.csproj", "{7E4E6107-99A9-F8FF-0C6B-CCBF7D13C185}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85D16CCA-6183-4B24-B025-4205BEFC0129} = {85D16CCA-6183-4B24-B025-4205BEFC0129}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "..\..\..\..\Desktop\WebApplication1-reworked-5-week\WebApplication1\WebApplication1.csproj", "{78D06929-022F-8A86-09FC-CB3E28F5EA8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{85D16CCA-6183-4B24-B025-4205BEFC0129} = {85D16CCA-6183-4B24-B025-4205BEFC0129}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1.Shared", "ClassLibrary\WebApplication1.Shared.csproj", "{85D16CCA-6183-4B24-B025-4205BEFC0129}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{AA7074DB-6629-4FEE-B48B-8D082EECF217}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{584479D8-C677-4566-9FDD-790A02EA63A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8735EEDA-5834-4BB0-B41A-DC9EF55F6A89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{F7865857-8557-4134-A045-F913EC66B4F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +34,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C1DCF40-C78F-4835-8DFD-8F335D056EEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C1DCF40-C78F-4835-8DFD-8F335D056EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C1DCF40-C78F-4835-8DFD-8F335D056EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C1DCF40-C78F-4835-8DFD-8F335D056EEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +42,14 @@ Global
 		{7E4E6107-99A9-F8FF-0C6B-CCBF7D13C185}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E4E6107-99A9-F8FF-0C6B-CCBF7D13C185}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E4E6107-99A9-F8FF-0C6B-CCBF7D13C185}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78D06929-022F-8A86-09FC-CB3E28F5EA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78D06929-022F-8A86-09FC-CB3E28F5EA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78D06929-022F-8A86-09FC-CB3E28F5EA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78D06929-022F-8A86-09FC-CB3E28F5EA8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85D16CCA-6183-4B24-B025-4205BEFC0129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85D16CCA-6183-4B24-B025-4205BEFC0129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85D16CCA-6183-4B24-B025-4205BEFC0129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85D16CCA-6183-4B24-B025-4205BEFC0129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,4 +57,21 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D0AC32EA-0238-4838-A0E6-70346D443B07}
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{78D06929-022F-8A86-09FC-CB3E28F5EA8A} = {AA7074DB-6629-4FEE-B48B-8D082EECF217}
+		{7904D456-1703-4C4B-733E-A6903F06FCAF} = {584479D8-C677-4566-9FDD-790A02EA63A5}
+		{7E4E6107-99A9-F8FF-0C6B-CCBF7D13C185} = {AA7074DB-6629-4FEE-B48B-8D082EECF217}
+		{8735EEDA-5834-4BB0-B41A-DC9EF55F6A89} = {AA7074DB-6629-4FEE-B48B-8D082EECF217}
+		{85D16CCA-6183-4B24-B025-4205BEFC0129} = {F7865857-8557-4134-A045-F913EC66B4F8}
+	EndGlobalSection
 EndGlobal
+taskkill /F /IM dotnet.exe /T
+taskkill /F /IM "project 3.exe" /T
+taskkill /F /IM "WebApplication1.exe" /T
+
+taskkill /F /IM dotnet.exe /T
+taskkill /F /IM "project 3.exe" /T
+taskkill /F /IM "WebApplication1.exe" /T
+
+taskkill /F /IM dotnet.exe /T
+

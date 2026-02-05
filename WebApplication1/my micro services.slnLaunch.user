@@ -3,19 +3,19 @@
     "Name": "Новый профиль",
     "Projects": [
       {
-        "Path": "WebApplication1\\WebApplication1.csproj",
-        "Action": "Start",
-        "DebugTarget": "https"
-      },
-      {
         "Path": "..\\..\\ApiGateway\\ApiGateway\\ApiGateway.csproj",
         "Action": "Start",
         "DebugTarget": "http"
       },
       {
-        "Path": "..\\..\\project 3\\project 3\\project 3.csproj",
+        "Path": "..\\project-4-reworked-5-week\\project 3\\project 3.csproj",
         "Action": "Start",
         "DebugTarget": "http"
+      },
+      {
+        "Path": "..\\..\\..\\..\\Desktop\\WebApplication1-reworked-5-week\\WebApplication1\\WebApplication1.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
       }
     ]
   }
