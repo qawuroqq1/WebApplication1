@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "appsettings.json", "appsett
 		appsettings.json = appsettings.json
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "..\..\ApiGateway\ApiGateway\ApiGateway.csproj", "{7904D456-1703-4C4B-733E-A6903F06FCAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "..\..\..\..\Desktop\WebApplication1-5-week\WebApplication1\WebApplication1.csproj", "{E9165C78-E938-F450-674A-799E9EBDAA63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{434CDD52-96FE-41D4-B30B-25674718E32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{434CDD52-96FE-41D4-B30B-25674718E32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{434CDD52-96FE-41D4-B30B-25674718E32F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7904D456-1703-4C4B-733E-A6903F06FCAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9165C78-E938-F450-674A-799E9EBDAA63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9165C78-E938-F450-674A-799E9EBDAA63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9165C78-E938-F450-674A-799E9EBDAA63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9165C78-E938-F450-674A-799E9EBDAA63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
